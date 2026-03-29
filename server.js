@@ -1,19 +1,21 @@
 const express = require("express");
 const axios = require("axios");
+
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 
+// Ruta principal
 app.get("/", (req, res) => {
   res.send("Servidor funcionando");
 });
 
+// Ruta test
 app.get("/test", (req, res) => {
-  res.json({
-    status: "ok",
-    mensaje: "API funcionando correctamente"
-  });
+  res.json({ status: "ok" });
 });
+
+// Ruta arbitraje con datos reales
 app.get("/arbitraje", async (req, res) => {
   try {
     const binanceRes = await axios.get(
@@ -34,38 +36,22 @@ app.get("/arbitraje", async (req, res) => {
     const feeVenta = bybit * comision;
     const transferencia = 10;
 
-    const ganancia = diferencia - feeCompra - feeVenta - transferencia;
+    const ganancia =
+      diferencia - feeCompra - feeVenta - transferencia;
 
     res.json({
       binance,
       bybit,
       diferencia,
       ganancia,
-      rentable: ganancia > 0
+      rentable: ganancia > 0,
     });
-
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Error obteniendo precios" });
+    res.status(500).json({
+      error: "Error obteniendo precios",
+    });
   }
-});
-
-  const diferencia = bybit - binance;
-
-  const comision = 0.001;
-  const feeCompra = binance * comision;
-  const feeVenta = bybit * comision;
-  const transferencia = 10;
-
-  const ganancia = diferencia - feeCompra - feeVenta - transferencia;
-
-  res.json({
-    binance,
-    bybit,
-    diferencia,
-    ganancia,
-    rentable: ganancia > 0
-  });
 });
 
 app.listen(PORT, () => {
