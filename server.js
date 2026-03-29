@@ -2,7 +2,6 @@ const express = require("express");
 const axios = require("axios");
 
 const app = express();
-
 const PORT = process.env.PORT || 3000;
 
 // Ruta principal
@@ -15,18 +14,17 @@ app.get("/test", (req, res) => {
   res.json({ status: "ok" });
 });
 
-// Ruta arbitraje con datos reales
+// Ruta arbitraje
 app.get("/arbitraje", async (req, res) => {
   try {
-    const binanceRes = await axios.get(
+    const response = await axios.get(
       "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT"
     );
 
-    const precioBase = parseFloat(binanceRes.data.price);
+    const precio = parseFloat(response.data.price);
 
-    // Simulación de segundo exchange
-    const binance = precioBase;
-    const bybit = precioBase + (Math.random() * 100 - 50);
+    const binance = precio;
+    const bybit = precio + (Math.random() * 100 - 50);
 
     const diferencia = bybit - binance;
 
@@ -47,9 +45,14 @@ app.get("/arbitraje", async (req, res) => {
     });
 
   } catch (error) {
-    console.error(error.message);
+    console.error("ERROR:", error.message);
     res.status(500).json({
-      error: "Error obteniendo precio de Binance",
+      error: "Error obteniendo datos",
     });
   }
+});
+
+// ⚠️ ESTO ES CLAVE (no borrar)
+app.listen(PORT, () => {
+  console.log("Servidor corriendo en puerto " + PORT);
 });
