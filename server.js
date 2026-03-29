@@ -36,13 +36,15 @@ app.get("/arbitraje", async (req, res) => {
     const ganancia =
       diferencia - feeCompra - feeVenta - transferencia;
 
-    res.json({
-      binance,
-      bybit,
-      diferencia,
-      ganancia,
-      rentable: ganancia > 0,
-    });
+res.json({
+  binance,
+  bybit,
+  diferencia,
+  ganancia,
+  rentable: ganancia > 0,
+  timestamp: Date.now(),
+  randomTest: Math.random()
+});
 
   } catch (error) {
     console.error("ERROR:", error.message);
