@@ -22,12 +22,11 @@ app.get("/arbitraje", async (req, res) => {
       "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT"
     );
 
-    const bybitRes = await axios.get(
-      "https://api.bybit.com/v2/public/tickers?symbol=BTCUSDT"
-    );
+    const precioBase = parseFloat(binanceRes.data.price);
 
-    const binance = parseFloat(binanceRes.data.price);
-    const bybit = parseFloat(bybitRes.data.result[0].last_price);
+    // Simulación de segundo exchange
+    const binance = precioBase;
+    const bybit = precioBase + (Math.random() * 100 - 50);
 
     const diferencia = bybit - binance;
 
@@ -46,14 +45,11 @@ app.get("/arbitraje", async (req, res) => {
       ganancia,
       rentable: ganancia > 0,
     });
+
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     res.status(500).json({
-      error: "Error obteniendo precios",
+      error: "Error obteniendo precio de Binance",
     });
   }
-});
-
-app.listen(PORT, () => {
-  console.log("Servidor corriendo en puerto " + PORT);
 });
