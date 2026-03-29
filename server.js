@@ -28,3 +28,24 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log("Servidor corriendo en http://localhost:" + PORT);
 });
+const express = require("express");
+const app = express();
+
+const PORT = process.env.PORT || 3000;
+
+// Ruta principal
+app.get("/", (req, res) => {
+  res.send("Servidor funcionando");
+});
+
+// Ruta de prueba
+app.get("/test", (req, res) => {
+  res.json({
+    status: "ok",
+    mensaje: "API funcionando correctamente"
+  });
+});
+
+app.listen(PORT, () => {
+  console.log("Servidor corriendo en puerto " + PORT);
+});
