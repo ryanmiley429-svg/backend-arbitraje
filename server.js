@@ -18,10 +18,10 @@ app.get("/test", (req, res) => {
 app.get("/arbitraje", async (req, res) => {
   try {
     const response = await axios.get(
-      "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT"
+      "https://api.coinbase.com/v2/prices/BTC-USD/spot"
     );
 
-    const precio = parseFloat(response.data.price);
+    const precio = parseFloat(response.data.data.amount);
 
     const binance = precio;
     const bybit = precio + (Math.random() * 100 - 50);
