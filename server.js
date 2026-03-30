@@ -36,13 +36,13 @@ const bybit = krakenPrice;
 
     const diferencia = bybit - binance;
 
-    const comision = 0.001;
+    const comision = 0.0005;
     const feeCompra = binance * comision;
     const feeVenta = bybit * comision;
-    const transferencia = 10;
+    const transferencia = 0;
 
     const ganancia =
-      diferencia - feeCompra - feeVenta - transferencia;
+      diferencia - feeCompra - feeVenta;
 
 res.json({
   binance,
