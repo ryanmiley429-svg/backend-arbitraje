@@ -47,11 +47,14 @@ res.json({
 });
 
   } catch (error) {
-    console.error("ERROR:", error.message);
-    res.status(500).json({
-      error: "Error obteniendo datos",
-    });
-  }
+  console.error("ERROR COMPLETO:", error);
+
+  res.status(500).json({
+    error: "Error obteniendo datos",
+    detalle: error.message,
+    data: error.response?.data || null
+  });
+}
 });
 
 // ⚠️ ESTO ES CLAVE (no borrar)
