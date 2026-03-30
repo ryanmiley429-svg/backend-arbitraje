@@ -24,7 +24,15 @@ app.get("/arbitraje", async (req, res) => {
     const precio = parseFloat(response.data.data.amount);
 
     const binance = precio;
-    const bybit = precio + (Math.random() * 100 - 50);
+    const krakenResponse = await axios.get(
+  "https://api.kraken.com/0/public/Ticker?pair=XBTUSD"
+);
+
+const krakenPrice = parseFloat(
+  krakenResponse.data.result.XXBTZUSD.c[0]
+);
+
+const bybit = krakenPrice;
 
     const diferencia = bybit - binance;
 
